@@ -12,7 +12,7 @@ import retrofit2.http.Path;
 
 public interface DarkSkyEndpoints {
 
-    @GET("/{longitude},{latitude}")
+    @GET("/forecast/e15d7b66826921e95fbb65a190e81e68/{longitude},{latitude}")
     Call<Report> weatherReport(@Path("longitude") double longitude, @Path("latitude") double latitude);
 
 

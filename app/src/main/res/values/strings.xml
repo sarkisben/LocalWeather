@@ -3,4 +3,11 @@
     <string name="test">Sample Text</string>
     <string name="enter_location">Enter a location</string>
     <string name="location_permission_denied">Permission to share your location is not granted</string>
+    <string name="temperature">Current Temperature: %1$.2f degrees Fahrenheit</string>
+    <string name="temperature_high">High of %1$.2f</string>
+    <string name="temperature_low">Low of %1$.2f</string>
+    <string name="day"></string>
+    <string name="daily_summary"></string>
+    <string name="summary">Conditions are %1$s</string>
+    <string name="forecast_header">Forecast for the next 5 days</string>
 </resources>

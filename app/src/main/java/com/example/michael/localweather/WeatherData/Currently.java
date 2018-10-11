@@ -26,10 +26,10 @@ public class Currently {
     private int nearestStormBearing;
     @SerializedName("precipIntensity")
     @Expose
-    private int precipIntensity;
+    private double precipIntensity;
     @SerializedName("precipProbability")
     @Expose
-    private int precipProbability;
+    private double precipProbability;
     @SerializedName("temperature")
     @Expose
     private double temperature;
@@ -56,7 +56,7 @@ public class Currently {
     private int windBearing;
     @SerializedName("cloudCover")
     @Expose
-    private int cloudCover;
+    private double cloudCover;
     @SerializedName("uvIndex")
     @Expose
     private int uvIndex;
@@ -84,11 +84,11 @@ public class Currently {
         return nearestStormBearing;
     }
 
-    public int getPrecipIntensity() {
+    public double getPrecipIntensity() {
         return precipIntensity;
     }
 
-    public int getPrecipProbability() {
+    public double getPrecipProbability() {
         return precipProbability;
     }
 
@@ -124,7 +124,7 @@ public class Currently {
         return windBearing;
     }
 
-    public int getCloudCover() {
+    public double getCloudCover() {
         return cloudCover;
     }
 

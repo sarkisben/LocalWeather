@@ -3,6 +3,10 @@ package com.example.michael.localweather;
 import android.app.Activity;
 import android.location.Geocoder;
 
+import com.example.michael.localweather.WeatherData.Datum;
+
+import java.util.List;
+
 public class LocalWeatherPresenter implements LocalWeatherContract.Presenter {
     private LocalWeatherContract.View fragment;
     private LocalWeatherContract.Interactor interactor;
@@ -30,5 +34,20 @@ public class LocalWeatherPresenter implements LocalWeatherContract.Presenter {
     @Override
     public void passLatLong(double latitude, double longitude) {
         fragment.changeCoordToPlace(latitude, longitude);
+    }
+
+    @Override
+    public void passTemperature(double temp) {
+        fragment.showTemp(temp);
+    }
+
+    @Override
+    public void passSummary(String summ) {
+        fragment.showSummary(summ);
+    }
+
+    @Override
+    public void passForecast(List<Datum> days) {
+        fragment.showForecast(days);
     }
 }

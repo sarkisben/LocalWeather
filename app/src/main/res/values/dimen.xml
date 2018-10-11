@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="recycler_item_padding">10dp</dimen>
     <dimen name="small">5sp</dimen>
     <dimen name="medium">10sp</dimen>
     <dimen name="large">15sp</dimen>

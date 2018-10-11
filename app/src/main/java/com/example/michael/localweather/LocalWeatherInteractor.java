@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
 
+import com.example.michael.localweather.WeatherData.Datum;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -35,7 +37,6 @@ public class LocalWeatherInteractor implements LocalWeatherContract.Interactor{
     @Override
     public void startLocationServices(Activity context) {
         repository.initializeLocationServices(context);
-        repository.initializeRetrofit();
     }
 
     @Override
@@ -46,5 +47,20 @@ public class LocalWeatherInteractor implements LocalWeatherContract.Interactor{
     @Override
     public void passLatLong(double latitude, double longitude) {
         presenter.passLatLong(latitude, longitude);
+    }
+
+    @Override
+    public void passTemperature(double temp) {
+        presenter.passTemperature(temp);
+    }
+
+    @Override
+    public void passSummary(String summ) {
+        presenter.passSummary(summ);
+    }
+
+    @Override
+    public void passForecast(List<Datum> days) {
+        presenter.passForecast(days);
     }
 }

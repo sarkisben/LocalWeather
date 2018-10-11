@@ -7,11 +7,17 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
-import com.example.michael.localweather.Retrofit.ApiUtils;
 import com.example.michael.localweather.Retrofit.DarkSkyEndpoints;
+import com.example.michael.localweather.Retrofit.RetrofitClient;
+import com.example.michael.localweather.WeatherData.Currently;
+import com.example.michael.localweather.WeatherData.Report;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.example.michael.localweather.LocalWeatherContract.PERMISSIONS_REQUEST_READ_CONTACTS;
 
@@ -30,6 +36,7 @@ public class LocalWeatherRepository implements LocalWeatherContract.Repository {
 
     @Override
     public void initializeLocationServices(Activity context) {
+        endpoints = RetrofitClient.getClient();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
         //Check permission to see if we can use location
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -52,20 +59,35 @@ public class LocalWeatherRepository implements LocalWeatherContract.Repository {
                             if (location != null) {
                                 double longitude = location.getLongitude();
                                 double latitude = location.getLatitude();
-                                interactor.passLatLong(latitude, longitude);
+                                callForecast(latitude, longitude);
                             }
                             else{
-                                interactor.passLatLong(nullIsalndLatitude, nullIslandLongitude);
+                                callForecast(nullIsalndLatitude, nullIslandLongitude);
                             }
                         }
                     });
         }
     }
 
-    @Override
-    public void initializeRetrofit() {
-        endpoints = ApiUtils.getDarkSkyEndpoints();
-    }
+    private void callForecast(final double latitude, final double longitude){
+        Call<Report> call = endpoints.weatherReport(longitude, latitude);
+        call.enqueue(new Callback<Report>() {
+            @Override
+            public void onResponse(Call<Report> call, Response<Report> response) {
+                interactor.passLatLong(latitude, longitude);
+                Report report = response.body();
+//                String timezone = report.getTimezone();
+                Currently currentReport = report.getCurrently();
+                interactor.passTemperature(currentReport.getTemperature());
+                interactor.passSummary(currentReport.getSummary());
+                interactor.passForecast(report.getDaily().getData());
+            }
 
+            @Override
+            public void onFailure(Call<Report> call, Throwable t) {
+                interactor.createPermissionNotGrantedMessage(t.getMessage());
+            }
+        });
+    }
 
 }
