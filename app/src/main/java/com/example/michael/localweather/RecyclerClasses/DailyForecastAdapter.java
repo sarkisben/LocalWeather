@@ -11,15 +11,20 @@ import android.widget.TextView;
 import com.example.michael.localweather.R;
 import com.example.michael.localweather.WeatherData.Datum;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
-public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdapter.ViewHolder>{
+public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdapter.ViewHolder> {
 
     private List<Datum> forecast;
+    private String timezone;
 
 
-    public DailyForecastAdapter(List<Datum> forecast){
+    public DailyForecastAdapter(List<Datum> forecast, String timezone) {
         this.forecast = forecast;
+        this.timezone = timezone;
     }
 
     @NonNull
@@ -45,8 +50,8 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
         TextView tempHigh = viewHolder.tempHighTextView;
         TextView tempLow = viewHolder.tempLowTextView;
 
-        String convertedDay = datum.getTime() + "";
-        day.setText(convertedDay);
+
+        day.setText(convertToDate(datum.getTime()));
         summary.setText(datum.getSummary());
         String highTemp = String.format(localContext.getString(R.string.temperature_high), datum.getTemperatureHigh());
         tempHigh.setText(highTemp);
@@ -59,13 +64,26 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
         return forecast.size();
     }
 
+    /**
+     * Covnerts unix time to a date.
+     *
+     * @param unixTime A long representing seconds from the last Epohc in unix.
+     * @return String in this format: 	Wed, Jul 4, '01
+     */
+    private String convertToDate(long unixTime) {
+        Date date = new java.util.Date(unixTime * 1000L);
+        SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEE, MMM d");
+        sdf.setTimeZone(TimeZone.getTimeZone(timezone));
+        return sdf.format(date);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView dayTextView;
         public TextView summaryTextView;
         public TextView tempHighTextView;
         public TextView tempLowTextView;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView) {
             super(itemView);
             dayTextView = (TextView) itemView.findViewById(R.id.day);
             summaryTextView = (TextView) itemView.findViewById(R.id.daily_conditions);

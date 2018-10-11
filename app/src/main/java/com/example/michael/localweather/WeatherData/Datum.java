@@ -7,9 +7,6 @@ package com.example.michael.localweather.WeatherData;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class Datum {
 
     @SerializedName("time")
@@ -34,18 +31,23 @@ public class Datum {
     public int getTime() {
         return time;
     }
+
     public String getSummary() {
         return summary;
     }
+
     public double getPrecipProbability() {
         return precipProbability;
     }
+
     public String getPrecipType() {
         return precipType;
     }
+
     public double getTemperatureHigh() {
         return temperatureHigh;
     }
+
     public double getTemperatureLow() {
         return temperatureLow;
     }

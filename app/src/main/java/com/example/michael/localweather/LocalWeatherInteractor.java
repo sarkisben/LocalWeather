@@ -3,18 +3,19 @@ package com.example.michael.localweather;
 import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
+import android.support.v4.app.FragmentManager;
 
 import com.example.michael.localweather.WeatherData.Datum;
 
 import java.io.IOException;
 import java.util.List;
 
-public class LocalWeatherInteractor implements LocalWeatherContract.Interactor{
+public class LocalWeatherInteractor implements LocalWeatherContract.Interactor {
     private LocalWeatherContract.Presenter presenter;
     private LocalWeatherContract.Repository repository;
     private LocalWeatherContract.Router router;
 
-    public LocalWeatherInteractor(LocalWeatherContract.Presenter presenter){
+    public LocalWeatherInteractor(LocalWeatherContract.Presenter presenter) {
         this.presenter = presenter;
         repository = new LocalWeatherRepository(this);
         router = new LocalWeatherRouter(this);
@@ -24,11 +25,10 @@ public class LocalWeatherInteractor implements LocalWeatherContract.Interactor{
     public String getGeocodedLocation(Geocoder geocoder, double latitude, double longitude) {
         try {
             List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
-            if(listAddresses!= null && listAddresses.size() > 0){
+            if (listAddresses != null && listAddresses.size() > 0) {
                 return listAddresses.get(0).getAddressLine(0);
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return "Sample text";
@@ -60,7 +60,13 @@ public class LocalWeatherInteractor implements LocalWeatherContract.Interactor{
     }
 
     @Override
-    public void passForecast(List<Datum> days) {
-        presenter.passForecast(days);
+    public void passForecast(List<Datum> days, String timezone) {
+        presenter.passForecast(days, timezone);
+    }
+
+
+    @Override
+    public void goToSettingsPage(FragmentManager fragmentManager) {
+        router.openSettings(fragmentManager);
     }
 }

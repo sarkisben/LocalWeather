@@ -4,9 +4,10 @@ package com.example.michael.localweather.WeatherData;
  * Created by bgsar on 10/10/2018.
  */
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Daily {
 
@@ -24,8 +25,6 @@ public class Daily {
     public List<Datum> getData() {
         return data;
     }
-
-
 
 
 }

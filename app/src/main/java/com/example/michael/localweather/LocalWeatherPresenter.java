@@ -2,6 +2,7 @@ package com.example.michael.localweather;
 
 import android.app.Activity;
 import android.location.Geocoder;
+import android.support.v4.app.FragmentManager;
 
 import com.example.michael.localweather.WeatherData.Datum;
 
@@ -11,7 +12,7 @@ public class LocalWeatherPresenter implements LocalWeatherContract.Presenter {
     private LocalWeatherContract.View fragment;
     private LocalWeatherContract.Interactor interactor;
 
-    public LocalWeatherPresenter(LocalWeatherContract.View fragment){
+    public LocalWeatherPresenter(LocalWeatherContract.View fragment) {
         this.fragment = fragment;
         interactor = new LocalWeatherInteractor(this);
     }
@@ -47,7 +48,12 @@ public class LocalWeatherPresenter implements LocalWeatherContract.Presenter {
     }
 
     @Override
-    public void passForecast(List<Datum> days) {
-        fragment.showForecast(days);
+    public void passForecast(List<Datum> days, String timezone) {
+        fragment.showForecast(days, timezone);
+    }
+
+    @Override
+    public void goToSettingsPage(FragmentManager fragmentManager) {
+        interactor.goToSettingsPage(fragmentManager);
     }
 }

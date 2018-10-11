@@ -4,5 +4,5 @@
     <dimen name="small">5sp</dimen>
     <dimen name="medium">10sp</dimen>
     <dimen name="large">15sp</dimen>
-    <dimen name="header">30sp</dimen>
+    <dimen name="header">25sp</dimen>
 </resources>

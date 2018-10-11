@@ -28,15 +28,19 @@ public class Report {
     public double getLatitude() {
         return latitude;
     }
+
     public double getLongitude() {
         return longitude;
     }
+
     public String getTimezone() {
         return timezone;
     }
+
     public Currently getCurrently() {
         return currently;
     }
+
     public Daily getDaily() {
         return daily;
     }

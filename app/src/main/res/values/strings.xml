@@ -1,11 +1,15 @@
 <resources>
     <string name="app_name">LocalWeather</string>
+    <string name="button_text">Change Location</string>
     <string name="test">Sample Text</string>
     <string name="enter_location">Enter a location</string>
     <string name="location_permission_denied">Permission to share your location is not granted</string>
     <string name="temperature">Current Temperature: %1$.2f degrees Fahrenheit</string>
     <string name="temperature_high">High of %1$.2f</string>
     <string name="temperature_low">Low of %1$.2f</string>
+    <string name="current_location_description">Use current location</string>
+    <string name="select_location_description">Enter location (City and zipcode)</string>
+    <string name="back_text">Go back</string>
     <string name="day"></string>
     <string name="daily_summary"></string>
     <string name="summary">Conditions are %1$s</string>

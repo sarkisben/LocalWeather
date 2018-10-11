@@ -24,6 +24,6 @@ public class RetrofitClient {
         }
 
         DarkSkyEndpoints endpoints = retrofit.create(DarkSkyEndpoints.class);
-       return endpoints;
+        return endpoints;
     }
 }

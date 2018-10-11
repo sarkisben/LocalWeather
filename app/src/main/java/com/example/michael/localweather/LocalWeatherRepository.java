@@ -23,14 +23,13 @@ import static com.example.michael.localweather.LocalWeatherContract.PERMISSIONS_
 
 public class LocalWeatherRepository implements LocalWeatherContract.Repository {
 
-    private FusedLocationProviderClient fusedLocationProviderClient;
-    private DarkSkyEndpoints endpoints;
     private final double nullIslandLongitude = 5.633333;
     private final double nullIsalndLatitude = -1.416667;
-
     LocalWeatherContract.Interactor interactor;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private DarkSkyEndpoints endpoints;
 
-    public LocalWeatherRepository(LocalWeatherContract.Interactor interactor){
+    public LocalWeatherRepository(LocalWeatherContract.Interactor interactor) {
         this.interactor = interactor;
     }
 
@@ -42,15 +41,13 @@ public class LocalWeatherRepository implements LocalWeatherContract.Repository {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //Not granted
             //Show explanation?
-            if(ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_COARSE_LOCATION)){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(context, Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 interactor.createPermissionNotGrantedMessage(context.getResources().getString(R.string.location_permission_denied));
-            }
-            else{
+            } else {
                 //Request the permission
                 ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS_REQUEST_READ_CONTACTS);
             }
-        }
-        else {
+        } else {
             //Permission Granted
             fusedLocationProviderClient.getLastLocation()
                     .addOnSuccessListener(context, new OnSuccessListener<Location>() {
@@ -60,8 +57,7 @@ public class LocalWeatherRepository implements LocalWeatherContract.Repository {
                                 double longitude = location.getLongitude();
                                 double latitude = location.getLatitude();
                                 callForecast(latitude, longitude);
-                            }
-                            else{
+                            } else {
                                 callForecast(nullIsalndLatitude, nullIslandLongitude);
                             }
                         }
@@ -69,18 +65,19 @@ public class LocalWeatherRepository implements LocalWeatherContract.Repository {
         }
     }
 
-    private void callForecast(final double latitude, final double longitude){
+    private void callForecast(final double latitude, final double longitude) {
         Call<Report> call = endpoints.weatherReport(longitude, latitude);
         call.enqueue(new Callback<Report>() {
             @Override
             public void onResponse(Call<Report> call, Response<Report> response) {
                 interactor.passLatLong(latitude, longitude);
                 Report report = response.body();
-//                String timezone = report.getTimezone();
+                String timezone = report.getTimezone();
                 Currently currentReport = report.getCurrently();
                 interactor.passTemperature(currentReport.getTemperature());
                 interactor.passSummary(currentReport.getSummary());
-                interactor.passForecast(report.getDaily().getData());
+                interactor.passForecast(report.getDaily().getData(), timezone
+                );
             }
 
             @Override

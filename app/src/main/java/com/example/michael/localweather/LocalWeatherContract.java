@@ -2,6 +2,7 @@ package com.example.michael.localweather;
 
 import android.app.Activity;
 import android.location.Geocoder;
+import android.support.v4.app.FragmentManager;
 
 import com.example.michael.localweather.WeatherData.Datum;
 
@@ -9,34 +10,54 @@ import java.util.List;
 
 public interface LocalWeatherContract {
 
-    public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 3;
+    public static int PERMISSIONS_REQUEST_READ_CONTACTS = 3;
 
-    interface View{
+    interface View {
         void showToast(String text);
+
         void changeCoordToPlace(double latitude, double longitude);
+
         void showTemp(double temp);
+
         void showSummary(String summ);
-        void showForecast(List<Datum> days);
+
+        void showForecast(List<Datum> days, String timezone);
     }
 
     interface Presenter {
         String getGeocodedLocation(Geocoder geocoder, double latitude, double longitude);
+
         void startLocationServices(Activity context);
+
         void showPermissionNotGrantedMessage(String text);
+
         void passLatLong(double latitude, double longitude);
+
         void passTemperature(double temp);
+
         void passSummary(String summ);
-        void passForecast(List<Datum> days);
+
+        void passForecast(List<Datum> days, String timezone);
+
+        void goToSettingsPage(FragmentManager fragmentManager);
     }
 
     interface Interactor {
         String getGeocodedLocation(Geocoder geocoder, double latitude, double longitude);
+
         void startLocationServices(Activity context);
+
         void createPermissionNotGrantedMessage(String text);
+
         void passLatLong(double latitude, double longitude);
+
         void passTemperature(double temp);
+
         void passSummary(String summ);
-        void passForecast(List<Datum> days);
+
+        void passForecast(List<Datum> days, String timezone);
+
+        void goToSettingsPage(FragmentManager fragmentManager);
 
     }
 
@@ -45,6 +66,6 @@ public interface LocalWeatherContract {
     }
 
     interface Router {
-        void openSettings();
+        void openSettings(FragmentManager fragmentManager);
     }
 }
