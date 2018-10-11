@@ -28,6 +28,7 @@ public interface LocalWeatherContract {
 
     interface Repository {
         void initializeLocationServices(Activity context);
+        void initializeRetrofit();
     }
 
     interface Router {

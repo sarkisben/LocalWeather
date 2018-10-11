@@ -7,6 +7,8 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import com.example.michael.localweather.Retrofit.ApiUtils;
+import com.example.michael.localweather.Retrofit.DarkSkyEndpoints;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,6 +18,7 @@ import static com.example.michael.localweather.LocalWeatherContract.PERMISSIONS_
 public class LocalWeatherRepository implements LocalWeatherContract.Repository {
 
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private DarkSkyEndpoints endpoints;
     private final double nullIslandLongitude = 5.633333;
     private final double nullIsalndLatitude = -1.416667;
 
@@ -58,4 +61,11 @@ public class LocalWeatherRepository implements LocalWeatherContract.Repository {
                     });
         }
     }
+
+    @Override
+    public void initializeRetrofit() {
+        endpoints = ApiUtils.getDarkSkyEndpoints();
+    }
+
+
 }

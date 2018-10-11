@@ -35,6 +35,7 @@ public class LocalWeatherInteractor implements LocalWeatherContract.Interactor{
     @Override
     public void startLocationServices(Activity context) {
         repository.initializeLocationServices(context);
+        repository.initializeRetrofit();
     }
 
     @Override
