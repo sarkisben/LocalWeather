@@ -38,11 +38,15 @@ public class LocalWeatherFragment extends Fragment implements LocalWeatherContra
         activity = getActivity();
         presenter = new LocalWeatherPresenter(this);
         geocoder = new Geocoder(activity.getApplicationContext(), Locale.getDefault());
+
         presenter.startLocationServices(getActivity());
 
+        int BackStackCount = getFragmentManager().getBackStackEntryCount();
         String zipcode = ((MainActivity) getActivity()).getReadableLocation();
-        if (zipcode != null && !zipcode.isEmpty()) {
+        if (BackStackCount >= 2 && zipcode != null && !zipcode.isEmpty()) {
             presenter.enterZip(geocoder, zipcode);
+        } else {
+
         }
     }
 

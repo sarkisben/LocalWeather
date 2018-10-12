@@ -65,14 +65,20 @@ public class LocalWeatherRepository implements LocalWeatherContract.Repository {
         }
     }
 
-    public void callForecast(final double latitude, final double longitude) {
+    @Override
+    public void callForecast(double latitude, double longitude) {
         Call<Report> call = endpoints.weatherReport(longitude, latitude);
         call.enqueue(new Callback<Report>() {
             @Override
             public void onResponse(Call<Report> call, Response<Report> response) {
-                interactor.passLatLong(latitude, longitude);
                 Report report = response.body();
-                String timezone = report.getTimezone();
+                interactor.passLatLong(report.getLatitude(), report.getLongitude());
+                String timezone;
+                if (report.getTimezone() != null) {
+                    timezone = report.getTimezone();
+                } else {
+                    timezone = "America/New_York";
+                }
                 Currently currentReport = report.getCurrently();
                 interactor.passTemperature(currentReport.getTemperature());
                 interactor.passSummary(currentReport.getSummary());

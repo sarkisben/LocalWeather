@@ -13,5 +13,5 @@
     <string name="day"></string>
     <string name="daily_summary"></string>
     <string name="summary">Conditions are %1$s</string>
-    <string name="forecast_header">Forecast for the next 5 days</string>
+    <string name="forecast_header">Forecast for the next 8 days</string>
 </resources>

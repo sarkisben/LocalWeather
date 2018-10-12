@@ -69,7 +69,7 @@ public interface LocalWeatherContract {
     interface Repository {
         void initializeLocationServices(Activity context);
 
-        void callForecast(final double latitude, final double longitude);
+        void callForecast(double latitude, double longitude);
     }
 
     interface Router {
