@@ -46,6 +46,21 @@ public class LocalWeatherInteractor implements LocalWeatherContract.Interactor {
     }
 
     @Override
+    public void convertZipToLatLong(Geocoder geocoder, String zip) {
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(zip, 1);
+            if (addresses != null && !addresses.isEmpty()) {
+                Address address = addresses.get(0);
+                repository.callForecast(address.getLatitude(), address.getLongitude());
+            } else {
+                presenter.showPermissionNotGrantedMessage("Unable to get zipcode");
+            }
+        } catch (IOException e) {
+            presenter.showPermissionNotGrantedMessage(e.getMessage());
+        }
+    }
+
+    @Override
     public void passLatLong(double latitude, double longitude) {
         presenter.passLatLong(latitude, longitude);
     }

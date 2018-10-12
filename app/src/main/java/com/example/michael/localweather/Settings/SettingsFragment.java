@@ -39,17 +39,16 @@ public class SettingsFragment extends Fragment implements SettingsContract.View{
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        RadioGroup allSettings = (RadioGroup) activity.findViewById(R.id.settings);
-        backButton = (Button) activity.findViewById(R.id.back_button);
-        enterLocation = (EditText) activity.findViewById(R.id.enter_location);
+        RadioGroup allSettings = activity.findViewById(R.id.settings);
+        backButton = activity.findViewById(R.id.back_button);
+        enterLocation = activity.findViewById(R.id.enter_location);
         allSettings.check(R.id.current_location);
         allSettings.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.current_location){
                     enterLocation.setFocusable(false);
-                }
-                else{
+                } else if (checkedId == R.id.select_location) {
                     enterLocation.setFocusable(true);
                 }
             }
@@ -58,15 +57,9 @@ public class SettingsFragment extends Fragment implements SettingsContract.View{
         enterLocation.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        actionId == EditorInfo.IME_ACTION_DONE ||
-                        event != null &&
-                                event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    if(event == null || !event.isShiftPressed()){
-                        ((MainActivity)getActivity()).setReadableLocation(v.getText().toString());
-                        return true;
-                    }
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) ||
+                        (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    ((MainActivity) getActivity()).setReadableLocation(v.getText().toString());
                 }
                 return false;
             }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface LocalWeatherContract {
 
-    public static int PERMISSIONS_REQUEST_READ_CONTACTS = 3;
+    int PERMISSIONS_REQUEST_READ_CONTACTS = 3;
 
     interface View {
         void showToast(String text);
@@ -28,7 +28,7 @@ public interface LocalWeatherContract {
     interface Presenter {
         String getGeocodedLocation(Geocoder geocoder, double latitude, double longitude);
 
-        String convertZipToLatLong(Geocoder geocoder, String zip);
+        void enterZip(Geocoder geocoder, String zip);
 
         void startLocationServices(Activity context);
 
@@ -52,6 +52,8 @@ public interface LocalWeatherContract {
 
         void createPermissionNotGrantedMessage(String text);
 
+        void convertZipToLatLong(Geocoder geocoder, String zip);
+
         void passLatLong(double latitude, double longitude);
 
         void passTemperature(double temp);
@@ -66,6 +68,8 @@ public interface LocalWeatherContract {
 
     interface Repository {
         void initializeLocationServices(Activity context);
+
+        void callForecast(final double latitude, final double longitude);
     }
 
     interface Router {

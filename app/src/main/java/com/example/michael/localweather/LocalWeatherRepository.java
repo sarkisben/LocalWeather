@@ -65,7 +65,7 @@ public class LocalWeatherRepository implements LocalWeatherContract.Repository {
         }
     }
 
-    private void callForecast(final double latitude, final double longitude) {
+    public void callForecast(final double latitude, final double longitude) {
         Call<Report> call = endpoints.weatherReport(longitude, latitude);
         call.enqueue(new Callback<Report>() {
             @Override

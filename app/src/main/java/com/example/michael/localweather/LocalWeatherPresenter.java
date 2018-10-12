@@ -1,14 +1,12 @@
 package com.example.michael.localweather;
 
 import android.app.Activity;
-import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.example.michael.localweather.WeatherData.Datum;
 
-import java.io.IOException;
 import java.util.List;
 
 public class LocalWeatherPresenter implements LocalWeatherContract.Presenter {
@@ -26,21 +24,8 @@ public class LocalWeatherPresenter implements LocalWeatherContract.Presenter {
     }
 
     @Override
-    public String convertZipToLatLong(Geocoder geocoder, String zip) {
-        try{
-            List<Address> addresses = geocoder.getFromLocationName(zip, 1);
-            if(addresses != null && !addresses.isEmpty()) {
-                Address address = addresses.get(0);
-                return interactor.getGeocodedLocation(geocoder, address.getLatitude(), address.getLongitude());
-            }
-            else{
-                showPermissionNotGrantedMessage("Unable to get zipcode");
-            }
-        }
-        catch (IOException e) {
-            showPermissionNotGrantedMessage(e.getMessage());
-        }
-        return "Sample Text";
+    public void enterZip(Geocoder geocoder, String zip) {
+        interactor.convertZipToLatLong(geocoder, zip);
     }
 
     @Override
