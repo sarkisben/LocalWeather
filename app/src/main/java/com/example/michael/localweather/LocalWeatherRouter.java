@@ -1,6 +1,5 @@
 package com.example.michael.localweather;
 
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -15,7 +14,7 @@ public class LocalWeatherRouter implements LocalWeatherContract.Router {
     }
 
     @Override
-    public void openSettings(FragmentManager fragmentManager) {
+    public void openSettings(FragmentManager fragmentManager, Fragment fragment) {
         SettingsFragment settings = new SettingsFragment();
         fragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, settings)

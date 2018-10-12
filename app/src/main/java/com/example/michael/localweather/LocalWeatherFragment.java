@@ -37,8 +37,6 @@ public class LocalWeatherFragment extends Fragment implements LocalWeatherContra
         activity = getActivity();
         presenter = new LocalWeatherPresenter(this);
         presenter.startLocationServices(getActivity());
-
-
     }
 
     @Override
@@ -48,10 +46,9 @@ public class LocalWeatherFragment extends Fragment implements LocalWeatherContra
         changeLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.goToSettingsPage(getFragmentManager());
+                presenter.goToSettingsPage(getFragmentManager(), LocalWeatherFragment.this);
             }
         });
-
     }
 
     @Override
@@ -61,8 +58,17 @@ public class LocalWeatherFragment extends Fragment implements LocalWeatherContra
 
     @Override
     public void changeCoordToPlace(double latitude, double longitude) {
+        int BackStackCount = getFragmentManager().getBackStackEntryCount();
         Geocoder geocoder = new Geocoder(activity.getApplicationContext(), Locale.getDefault());
-        String location = presenter.getGeocodedLocation(geocoder, latitude, longitude);
+        String location;
+        String zipcode = ((MainActivity)getActivity()).getReadableLocation();
+        if(BackStackCount >= 3 && zipcode != null && !zipcode.isEmpty()){
+            location = presenter.convertZipToLatLong(geocoder, zipcode);
+        }
+        else {
+            location = presenter.getGeocodedLocation(geocoder, latitude, longitude);
+        }
+
         ((TextView) activity.findViewById(R.id.location_header)).setText(location);
     }
 

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.michael.localweather.MainActivity;
 import com.example.michael.localweather.R;
 
 public class SettingsFragment extends Fragment implements SettingsContract.View{
@@ -21,7 +22,6 @@ public class SettingsFragment extends Fragment implements SettingsContract.View{
     private Button backButton;
     private Activity activity;
     private EditText enterLocation;
-    private String location;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class SettingsFragment extends Fragment implements SettingsContract.View{
                                 event.getAction() == KeyEvent.ACTION_DOWN &&
                                 event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                     if(event == null || !event.isShiftPressed()){
-                        location = v.getText().toString();
+                        ((MainActivity)getActivity()).setReadableLocation(v.getText().toString());
                         return true;
                     }
                 }
@@ -75,7 +75,7 @@ public class SettingsFragment extends Fragment implements SettingsContract.View{
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.goBack(location);
+                presenter.goBack(getFragmentManager());
             }
         });
     }

@@ -1,16 +1,18 @@
 package com.example.michael.localweather.Settings;
 
+import android.support.v4.app.FragmentManager;
+
 public class SettingsPresenter implements SettingsContract.Presenter {
     private SettingsContract.View fragment;
     private SettingsContract.Interactor interactor;
 
     public SettingsPresenter(SettingsContract.View fragment){
         this.fragment = fragment;
-        SettingsInteractor interactor = new SettingsInteractor(this);
+        interactor = new SettingsInteractor(this);
     }
 
     @Override
-    public void goBack(String location) {
-        interactor.goBack(location);
+    public void goBack(FragmentManager manager) {
+        interactor.goBack(manager);
     }
 }

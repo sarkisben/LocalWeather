@@ -2,6 +2,7 @@ package com.example.michael.localweather;
 
 import android.app.Activity;
 import android.location.Geocoder;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.example.michael.localweather.WeatherData.Datum;
@@ -27,6 +28,8 @@ public interface LocalWeatherContract {
     interface Presenter {
         String getGeocodedLocation(Geocoder geocoder, double latitude, double longitude);
 
+        String convertZipToLatLong(Geocoder geocoder, String zip);
+
         void startLocationServices(Activity context);
 
         void showPermissionNotGrantedMessage(String text);
@@ -39,7 +42,7 @@ public interface LocalWeatherContract {
 
         void passForecast(List<Datum> days, String timezone);
 
-        void goToSettingsPage(FragmentManager fragmentManager);
+        void goToSettingsPage(FragmentManager fragmentManager, Fragment fragment);
     }
 
     interface Interactor {
@@ -57,7 +60,7 @@ public interface LocalWeatherContract {
 
         void passForecast(List<Datum> days, String timezone);
 
-        void goToSettingsPage(FragmentManager fragmentManager);
+        void goToSettingsPage(FragmentManager fragmentManager, Fragment fragment);
 
     }
 
@@ -66,6 +69,6 @@ public interface LocalWeatherContract {
     }
 
     interface Router {
-        void openSettings(FragmentManager fragmentManager);
+        void openSettings(FragmentManager fragmentManager, Fragment fragment);
     }
 }

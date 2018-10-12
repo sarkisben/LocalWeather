@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String readableLocation;
     //Open the LocalWeatherFragment by default
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +25,21 @@ public class MainActivity extends AppCompatActivity {
               .addToBackStack(null)
               .commit();
         }
+    }
+
+    /**
+     * Mutator for user entered location.
+     * @return The city and zip code of the user location.
+     */
+    public String getReadableLocation(){
+        return readableLocation;
+    }
+
+    /**
+     * Accessor for the user entered location
+     * @param newLoc Updated location.
+     */
+    public void setReadableLocation(String newLoc){
+        readableLocation = newLoc;
     }
 }

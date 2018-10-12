@@ -3,6 +3,7 @@ package com.example.michael.localweather;
 import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.example.michael.localweather.WeatherData.Datum;
@@ -66,7 +67,7 @@ public class LocalWeatherInteractor implements LocalWeatherContract.Interactor {
 
 
     @Override
-    public void goToSettingsPage(FragmentManager fragmentManager) {
-        router.openSettings(fragmentManager);
+    public void goToSettingsPage(FragmentManager fragmentManager,Fragment fragment) {
+        router.openSettings(fragmentManager, fragment);
     }
 }
